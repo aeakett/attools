@@ -1,5 +1,5 @@
 #!/bin/sh
-# Initial version courtesy of Dashcloud
+# Initial version courtesy of Dashcloud (http://paste.archivingyoursh.it/laxoqeroqi.bash)
 
 touch floppy-contents-v3
 for count in `ls |grep .img`; do
