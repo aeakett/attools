@@ -1,1 +1,2 @@
 cddev= # path to your cdrom device here
+attoolspath= # full path to where attools is located
