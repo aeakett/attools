@@ -1,9 +1,19 @@
 #!/usr/bin/zsh
 
+# Non-standard stuff that this script expects to find
+# ===================================================
+# ZSH (I think this could be replaced with sh if the range in the one for loop was re-written)
+# jq (http://stedolan.github.io/jq/)
+# convert (from imagemagick which you *probably* have)
+# mmv (think about if rename is more common)
+# pdfunite (there are probably tons of options for replacement here)
+
+# We should check the value of pdf_pages_available in the json. If it's false then we should just download the jpg pages.
+
 OWNER=`echo $1 | sed 's/.*issuu.com\///' | sed 's/\/.*//'`
 DOCNAME=`echo $1 | sed 's/.*\///'`
 DOCUMENTID=`wget --output-document=- http://publication.issuu.com/$OWNER/$DOCNAME/ios_1.json | gunzip | jq '.documentId' | tr -d \"`
-PAGECOUNT=`wget --output-document=- http://publication.issuu.com/$OWNER/$DOCNAME/ios_1.json |gunzip|jq '.pages|length'`
+PAGECOUNT=`wget --output-document=- http://publication.issuu.com/$OWNER/$DOCNAME/ios_1.json | gunzip | jq '.pages|length'`
 
 echo $OWNER
 echo $DOCNAME
@@ -28,8 +38,8 @@ do
 done
 
 mmv 'page_*.jpg.pdf' '#1.pdf'
-
 mmv '?.pdf' '0#1.pdf'
 mmv '??.pdf' '0#1#2.pdf'
 
+# Should maybe try and use documentTitle from the json?
 pdfunite *.pdf $DOCNAME.pdf
