@@ -15,6 +15,6 @@ fi
 
 YTDL_ARGS="--write-auto-sub --write-description --write-info-json --write-annotations --youtube-include-dash-manifest --all-subs"
 
-./youtube-dl $YTDL_ARGS $BASE_NAME $1
-7z a -t7z $2.subtitles.7z *.srt
+youtube-dl $YTDL_ARGS $BASE_NAME $1
+zip $2.subtitles.zip *.srt
 rm *.srt
