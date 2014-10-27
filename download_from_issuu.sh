@@ -31,15 +31,19 @@ do
    wget http://image.issuu.com/$DOCUMENTID/jpg/page_$i.jpg
 done
 
-for i in *.jpg
+for i in `find . -name '*.jpg'`
 do
    convert $i $i.pdf
    rm $i
 done
 
+echo removing remenants of jpg conversion
 mmv 'page_*.jpg.pdf' '#1.pdf'
+echo padding single-digit pages
 mmv '?.pdf' '0#1.pdf'
+echo padding double-digit pages
 mmv '??.pdf' '0#1#2.pdf'
 
 # Should maybe try and use documentTitle from the json?
+echo concatenating pdfs
 pdfunite *.pdf $DOCNAME.pdf
